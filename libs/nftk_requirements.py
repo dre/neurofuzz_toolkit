@@ -120,7 +120,10 @@ def get_required_paths():
 
     proxychains_check = check_for_proxychains()
     if proxychains_check.has_key('error_message'):
-        return proxychains_check
+        #return proxychains_check
+        ''' we can still run without this '''
+        proxychains_check = {'proxychains_path':'null'}
+        ret = merge_two_dicts(x=ret, y=proxychains_check)
     else:
         ret = merge_two_dicts(x=ret, y=proxychains_check)
 
