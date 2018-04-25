@@ -108,8 +108,11 @@ def check_for_nmap():
 
 '''
     API
+
+    nmap and tor are required for this to work
+
 '''
-def get_required_paths():
+def get_required_paths(use_proxychains=False):
     ret = {}
 
     tor_check = check_for_tor()
@@ -118,13 +121,17 @@ def get_required_paths():
     else:
         ret = merge_two_dicts(x=ret, y=tor_check)
 
-    proxychains_check = check_for_proxychains()
-    if proxychains_check.has_key('error_message'):
-        #return proxychains_check
-        ''' we can still run without this '''
-        proxychains_check = {'proxychains_path':'null'}
-        ret = merge_two_dicts(x=ret, y=proxychains_check)
+    if use_proxychains:
+        proxychains_check = check_for_proxychains()
+        if proxychains_check.has_key('error_message'):
+            #return proxychains_check
+            ''' we can still run without this '''
+            proxychains_check = {'proxychains_path':'null'}
+            ret = merge_two_dicts(x=ret, y=proxychains_check)
+        else:
+            ret = merge_two_dicts(x=ret, y=proxychains_check)
     else:
+        proxychains_check = {'proxychains_path':'null'}
         ret = merge_two_dicts(x=ret, y=proxychains_check)
 
     nmap_check = check_for_nmap()
