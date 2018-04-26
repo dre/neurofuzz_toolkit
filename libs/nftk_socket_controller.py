@@ -2,7 +2,7 @@
     Author: Andres Andreu < andres at neurofuzzsecurity dot com >
     Company: neuroFuzz, LLC
     Date: 10/11/2012
-    Last Modified: 09/15/2016
+    Last Modified: 04/25/2018
 
     Class to spawn off a number of instances of tor and set
     a socket to use this SOCKS5 instance
@@ -65,8 +65,33 @@ from vars import socket_controller_vars
 
 def clean_slate():
     for fname in glob.glob(socket_controller_vars.getDataDir() + '/tor*/tor*.pid'):
+
+        the_pid = ''
+
         if os.path.exists(fname):
+            with open(fname) as pid_fname:
+                the_pid = pid_fname.read()
+
+            if the_pid:
+                the_pid = the_pid.strip()
+                the_pid = int(the_pid)
+                content = ''
+                try:
+                    with open('/proc/{}/cmdline'.format(the_pid), mode='rb') as fd:
+                        content = fd.read().decode().split('\x00')
+                except Exception:
+                    continue
+
+                if content:
+                    joined_content = ' '.join(content)
+                    if 'tor' in joined_content and \
+                        'ControlPort' in joined_content and \
+                        'SocksPort' in joined_content and \
+                        'CookieAuthentication' in joined_content:
+                        os.kill(the_pid, signal.SIGQUIT)
+
             os.remove(fname)
+
 
 class SocketController:
     def __init__(self, tor_executable_path=''):
@@ -235,17 +260,19 @@ class SocketController:
             '''
             time.sleep(4)
             # set the real pid of the tor sock
+            tor_pid_fname = "{}/{}{}/{}{}{}".format(self.datadir, 'tor', str(t_instance), 'tor', str(t_instance), '.pid')
             try:
-                with open (self.datadir + '/tor' + str(t_instance) + "/tor%s.pid" % str(t_instance), "r") as myfile:
+                with open (tor_pid_fname, "r") as myfile:
                     self.pids.append(int(myfile.read().strip()))
             except:
-                while 1:
+                for i in range(1,4):
                     try:
-                        with open (self.datadir + '/tor' + str(t_instance) + "/tor%s.pid" % str(t_instance), "r") as myfile:
+                        with open (tor_pid_fname, "r") as myfile:
                             self.pids.append(int(myfile.read().strip()))
                             break
                     except:
                         continue
+                    time.sleep(1)
 
 
     def kill_sockets(self):
