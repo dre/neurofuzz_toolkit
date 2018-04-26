@@ -88,7 +88,10 @@ def clean_slate():
                         'ControlPort' in joined_content and \
                         'SocksPort' in joined_content and \
                         'CookieAuthentication' in joined_content:
-                        os.kill(the_pid, signal.SIGQUIT)
+                        try:
+                            os.kill(the_pid, signal.SIGQUIT)
+                        except:
+                            continue
 
             os.remove(fname)
 
