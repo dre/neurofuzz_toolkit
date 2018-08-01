@@ -51,7 +51,7 @@ import sys
 try:
     import socks
 except ImportError:
-    print "Please install socks (sudo pip install PySocks) and try again\n"
+    print("{}\n\n".format("Please install socks (sudo pip install PySocks) and try again"))
     sys.exit()
 
 import os
@@ -238,9 +238,7 @@ class SocketController:
             runstmt.append("--quiet")
 
             if self.debug:
-                print "\n"
-                print runstmt
-                print "\n"
+                print("\n{}\n".format(runstmt))
 
             '''
                 notes:
