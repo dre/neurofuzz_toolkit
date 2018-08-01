@@ -184,6 +184,7 @@ def delete_file(target_file=''):
 
 
 def check_dir_exists(the_dir=''):
+    ''' '''
     if the_dir:
         if not os.path.exists(the_dir):
             os.makedirs(the_dir)
@@ -199,11 +200,13 @@ def is_a_file(fpath=''):
 
 
 def check_dir_exists(the_dir=''):
+    ''' '''
     if the_dir:
         if not os.path.exists(the_dir):
             os.makedirs(the_dir)
 
 
 def get_range_in_subnet(the_subnet=''):
+    ''' '''
     if the_subnet:
         return ipaddress.ip_network(the_subnet).hosts()
