@@ -2,7 +2,7 @@
     Author: Andres Andreu < andres at neurofuzzsecurity dot com >
     Company: neuroFuzz, LLC
     Date: 10/11/2012
-    Last Modified: 04/20/2018
+    Last Modified: 09/01/2018
 
     generic functions that operate at a system level
 
@@ -54,8 +54,7 @@ import socket
 import itertools
 import logging
 import platform
-
-import ipaddr
+import ipaddress
 
 
 def get_lock(process_name='', process_description=''):
@@ -168,8 +167,10 @@ def get_local_ip():
 
 def target_ip_private(ip_addr=''):
     ''' returns bool stating whether or not the ip address passed in is private/non-routable '''
-    target_net = ipaddr.IPv4Network(address=ip_addr)
-    return target_net.IsRFC1918()
+    if ip_addr:
+        return ipaddress.ip_address(ip_addr.decode('utf-8')).is_private
+    else:
+        return False
 
 
 def delete_file(target_file=''):
@@ -198,3 +199,8 @@ def check_dir_exists(the_dir=''):
     if the_dir:
         if not os.path.exists(the_dir):
             os.makedirs(the_dir)
+
+
+def get_range_in_subnet(the_subnet=''):
+    if the_subnet:
+        return ipaddress.ip_network(the_subnet).hosts()
