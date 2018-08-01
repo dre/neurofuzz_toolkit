@@ -167,10 +167,13 @@ def get_local_ip():
 
 def target_ip_private(ip_addr=''):
     ''' returns bool stating whether or not the ip address passed in is private/non-routable '''
+    ret = False
     if ip_addr:
-        return ipaddress.ip_address(ip_addr.decode('utf-8')).is_private
-    else:
-        return False
+        try:
+            ret = ipaddress.ip_address(ip_addr.decode('utf-8')).is_private
+        except AttributeError:
+            ret = ipaddress.ip_address(ip_addr).is_private
+    return ret
 
 
 def delete_file(target_file=''):
