@@ -2,7 +2,7 @@
     Author: Andres Andreu < andres at neurofuzzsecurity dot com >
     Company: neuroFuzz, LLC
     Date: 10/11/2012
-    Last Modified: 08/18/2016
+    Last Modified: 08/01/2018
 
     variables to be used by the SocketController class
 
@@ -51,7 +51,11 @@ import hashlib
 import binascii
 import datetime
 from random import choice, randint
-from string import letters
+
+try:
+    from string import letters
+except ImportError:
+    from string import ascii_letters as letter
 
 ''' based on https://gist.github.com/3962751 '''
 def createTorPassword(secret = ""):
