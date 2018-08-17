@@ -2,7 +2,7 @@
     Author: Andres Andreu < andres at neurofuzzsecurity dot com >
     Company: neuroFuzz, LLC
     Date: 7/21/2016
-    Last Modified: 03/29/2018
+    Last Modified: 08/17/2018
 
     checks for required executables
 
@@ -116,10 +116,14 @@ def get_required_paths(use_proxychains=False):
     ret = {}
 
     tor_check = check_for_tor()
-    if tor_check.has_key('error_message'):
-        return tor_check
-    else:
-        ret = merge_two_dicts(x=ret, y=tor_check)
+    try:
+        if tor_check.has_key('error_message'):
+            return tor_check
+    except AttributeError:
+        if 'error_message' in tor_check:
+            return tor_check
+
+    ret = merge_two_dicts(x=ret, y=tor_check)
 
     if use_proxychains:
         proxychains_check = check_for_proxychains()
