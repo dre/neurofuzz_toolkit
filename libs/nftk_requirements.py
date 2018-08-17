@@ -139,11 +139,14 @@ def get_required_paths(use_proxychains=False):
         ret = merge_two_dicts(x=ret, y=proxychains_check)
 
     nmap_check = check_for_nmap()
-    if nmap_check.has_key('error_message'):
-        return nmap_check
-    else:
-        ret = merge_two_dicts(x=ret, y=nmap_check)
+    try:
+        if nmap_check.has_key('error_message'):
+            return nmap_check
+    except AttributeError:
+        if 'error_message' in nmap_check:
+            return nmap_check
 
+    ret = merge_two_dicts(x=ret, y=nmap_check)
     return ret
 
 
