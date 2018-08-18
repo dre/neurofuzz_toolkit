@@ -220,21 +220,26 @@ class SocketController:
 
             for k in self.torarguments.items():
                 try:
-                    if k == '--ControlPort':
-                        runstmt.append(k)
-                        runstmt.append(self.torarguments[k] % bcp)
-                    elif k == '--PidFile':
-                        runstmt.append(k)
-                        runstmt.append(self.torarguments[k] % str(t_instance))
-                    elif k == '--SocksPort':
-                        runstmt.append(k)
-                        runstmt.append(self.torarguments[k] % (self.selfip,bsp))
-                    elif k == '--DataDirectory':
-                        runstmt.append(k)
-                        runstmt.append(self.torarguments[k] % str(t_instance))
+                    if k[0] == '--ControlPort':
+                        runstmt.append(k[0])
+                        runstmt.append(k[1] % bcp)
+                        #runstmt.append(self.torarguments[k] % bcp)
+                    elif k[0] == '--PidFile':
+                        runstmt.append(k[0])
+                        runstmt.append(k[1] % str(t_instance))
+                        #runstmt.append(self.torarguments[k] % str(t_instance))
+                    elif k[0] == '--SocksPort':
+                        runstmt.append(k[0])
+                        runstmt.append(k[1] % (self.selfip,bsp))
+                        #runstmt.append(self.torarguments[k] % (self.selfip,bsp))
+                    elif k[0] == '--DataDirectory':
+                        runstmt.append(k[0])
+                        runstmt.append(k[1] % str(t_instance))
+                        #runstmt.append(self.torarguments[k] % str(t_instance))
                     else:
-                        runstmt.append(k)
-                        runstmt.append(self.torarguments[k])
+                        runstmt.append(k[0])
+                        runstmt.append(k[1])
+                        #runstmt.append(self.torarguments[k])
                 except KeyError:
                     continue
 
