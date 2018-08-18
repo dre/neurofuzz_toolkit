@@ -219,21 +219,24 @@ class SocketController:
             self.socks_port_list.append(bsp)
 
             for k in self.torarguments.items():
-                if k == '--ControlPort':
-                    runstmt.append(k)
-                    runstmt.append(self.torarguments[k] % bcp)
-                elif k == '--PidFile':
-                    runstmt.append(k)
-                    runstmt.append(self.torarguments[k] % str(t_instance))
-                elif k == '--SocksPort':
-                    runstmt.append(k)
-                    runstmt.append(self.torarguments[k] % (self.selfip,bsp))
-                elif k == '--DataDirectory':
-                    runstmt.append(k)
-                    runstmt.append(self.torarguments[k] % str(t_instance))
-                else:
-                    runstmt.append(k)
-                    runstmt.append(self.torarguments[k])
+                try:
+                    if k == '--ControlPort':
+                        runstmt.append(k)
+                        runstmt.append(self.torarguments[k] % bcp)
+                    elif k == '--PidFile':
+                        runstmt.append(k)
+                        runstmt.append(self.torarguments[k] % str(t_instance))
+                    elif k == '--SocksPort':
+                        runstmt.append(k)
+                        runstmt.append(self.torarguments[k] % (self.selfip,bsp))
+                    elif k == '--DataDirectory':
+                        runstmt.append(k)
+                        runstmt.append(self.torarguments[k] % str(t_instance))
+                    else:
+                        runstmt.append(k)
+                        runstmt.append(self.torarguments[k])
+                except KeyError:
+                    continue
 
             runstmt.append("--quiet")
 
