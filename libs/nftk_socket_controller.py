@@ -218,7 +218,7 @@ class SocketController:
             self.socks_control_ports[bsp] = bcp
             self.socks_port_list.append(bsp)
 
-            for k in self.torarguments.iterkeys():
+            for k in self.torarguments.items():
                 if k == '--ControlPort':
                     runstmt.append(k)
                     runstmt.append(self.torarguments[k] % bcp)
