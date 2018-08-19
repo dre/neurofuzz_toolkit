@@ -93,6 +93,11 @@
         file you need to copy the public side of your SSK keys to that
         target machine
 
+
+    TODOs:
+
+        - read user data (for the AllowUsers setting) from file(s)
+
 '''
 import os
 import sys
