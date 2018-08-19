@@ -84,8 +84,14 @@
 
         sudo python3 nftk_modify_sshd_config.py
 
-    Take note that by default we set SSH to listen on port 6446,
-    if you want to change this value change it in var SSHD_PORT
+    Notes:
+
+        - Take note that by default we set SSH to listen on port 6446,
+        if you want to change this value change it in var SSHD_PORT
+
+        - Prior to running this program and altering the target sshd_config
+        file you need to copy the public side of your SSK keys to that
+        target machine
 
 '''
 import os
