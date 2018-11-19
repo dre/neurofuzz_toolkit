@@ -2,13 +2,13 @@
     Author: Andres Andreu < andres at neurofuzzsecurity dot com >
     Company: neuroFuzz, LLC
     Date: 10/11/2012
-    Last Modified: 09/14/2018
+    Last Modified: 11/18/2018
 
     variables to be used by the SocketController class
 
     BSD 3-Clause License
 
-    Copyright (c) 2012-2016, Andres Andreu, neuroFuzz LLC
+    Copyright (c) 2012-2018, Andres Andreu, neuroFuzz LLC
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without modification,
@@ -120,7 +120,7 @@ torfname = 'tor%sfile'
 torarguments = {"--RunAsDaemon":'1',
                 "--CookieAuthentication":'0',
                 "--ControlPort":'%s',
-                "--PidFile":'tor%s.pid',
+                "--PidFile":datadir + '/tor%s/' + 'tor%s.pid',
                 "--SocksPort":'%s:%s',
                 "--DataDirectory":datadir + '/tor%s'
                 #"--HashedControlPassword":createTorPassword(secret=createRandAlpha(length=5)),
