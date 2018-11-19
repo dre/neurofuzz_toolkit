@@ -2,7 +2,7 @@
     Author: Andres Andreu < andres at neurofuzzsecurity dot com >
     Company: neuroFuzz, LLC
     Date: 10/11/2012
-    Last Modified: 08/01/2018
+    Last Modified: 11/18/2018
 
     Class to spawn off a number of instances of tor and set
     a socket to use this SOCKS5 instance
@@ -228,7 +228,7 @@ class SocketController:
                         #runstmt.append(self.torarguments[k] % bcp)
                     elif k[0] == '--PidFile':
                         runstmt.append(k[0])
-                        runstmt.append(k[1] % str(t_instance))
+                        runstmt.append(k[1] % (str(t_instance),str(t_instance)))
                         #runstmt.append(self.torarguments[k] % str(t_instance))
                     elif k[0] == '--SocksPort':
                         runstmt.append(k[0])
