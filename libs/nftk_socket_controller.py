@@ -118,6 +118,7 @@ class SocketController:
         self.debug = socket_controller_vars.getDebug()
         self.selfip = socket_controller_vars.getSocketIp()
         socket.setdefaulttimeout(10)
+        self._actual_port = 0
 
     def get_port_list(self):
         return self.socks_port_list
@@ -214,6 +215,7 @@ class SocketController:
             runstmt.append(self.torpath)
 
             bsp = str(self.base_socks_port+t_instance)
+            self._actual_port = bsp
             bcp = str(self.base_control_port+t_instance)
             self.socks_control_ports[bsp] = bcp
             self.socks_port_list.append(bsp)

@@ -2,7 +2,7 @@
     Author: Andres Andreu < andres at neurofuzzsecurity dot com >
     Company: neuroFuzz, LLC
     Date: 10/11/2012
-    Last Modified: 08/01/2018
+    Last Modified: 09/14/2018
 
     variables to be used by the SocketController class
 
